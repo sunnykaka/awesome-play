@@ -1,0 +1,250 @@
+@(form: Form[ordercenter.models.TestObject])
+
+@import common.utils.DateUtils._
+
+@main(){
+    <script type="text/javascript">
+jQuery(function ($) {
+    $("#submit_btn").click(function () {
+        $("#form1").submit() ;
+    }) ;
+
+    $("#buyTime").datetimepicker({format: 'yyyy-mm-dd hh:ii', language: 'zh-CN'});
+
+    $('#form1').validate({
+        errorElement: 'div',
+        errorClass: 'help-block',
+        focusInvalid: true,
+        rules: {
+            buyerId: {required: true},
+            buyTime: {required: true},
+            status: {required: true}
+        },
+
+        messages: {
+            buyerId: {required: "请输入买家名称"},
+            buyTime: {required: "请输入购买实践"},
+            status: {required: "请输入订单状态"}
+        },
+
+        submitHandler: function (form) {
+            var status = $("#status" ).val();
+            if(status != "WAIT_APPROVE") {
+                bootbox.alert("订单状态请输入WAIT_APPROVE");
+                return;
+            }
+            form.submit();
+        }
+    });
+
+});
+</script>
+} {
+
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+    try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+    </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>测试对象管理
+            </li>
+            <li class="active"><a href="@controllers.test.routes.TestObjectController.updatePage(form.get.getId)">测试对象修改</a></li>
+        </ul><!-- .breadcrumb -->
+    </div>
+
+    @tags.errorInfo(form)
+
+    <div class="page-content">
+        <div class="page-header">
+            <h1>
+                订单管理
+                <small>
+                    <i class="icon-double-angle-right"></i>测试对象修改
+                </small>
+            </h1>
+        </div>
+            <!-- /.page-header -->
+
+        <div class="row">
+            <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+
+                <form class="form-horizontal" role="form" id="form1" action="@controllers.test.routes.TestObjectController.saveTestObject()" method="post">
+
+                    @if(form.value.isDefined && form.value.get.getId != null) {
+                        <input type="hidden" id="id" name="id" value="@form.value.get.getId" />
+                    }
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="buyerId">买家用户名*</label>
+
+                        <div class="col-xs-12 col-sm-9">
+                            <div class="clearfix">
+                                <input type="text" name="buyerId" id="buyerId" class="col-xs-12 col-sm-6" value="@form.value.fold("")(_.getBuyerId)" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="buyTime">购买时间*</label>
+
+                        <div class="col-xs-12 col-sm-9">
+                            <div class="clearfix">
+                                <input type="text" id="buyTime" name="buyTime" class="col-xs-12 col-sm-6" value='@form.value.fold("")(x => printDateTime(x.getBuyTime))'/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="status">状态*</label>
+
+                        <div class="col-xs-12 col-sm-9">
+                            <div class="clearfix">
+                                <input type="text" name="status" id="status" class="col-xs-12 col-sm-6" value="@form.value.fold("")(_.getStatus.toString)" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="actualFee">金额*</label>
+
+                        <div class="col-xs-12 col-sm-9">
+                            <div class="clearfix">
+                            @defining(form.value.fold("")(o => if(o.getActualFee != null) o.getActualFee.toString else "")) { actualFeeStr =>
+                                <input type="text" name="actualFee" id="actualFee" class="col-xs-12 col-sm-6" value="@actualFeeStr" />
+                            }
+                            </div>
+                        </div>
+                    </div>
+
+                    @if(form.value.isEmpty || form.value.get.getTestObjectItemList.isEmpty) {
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="testObjectItemList[0].productId">测试项1产品ID</label>
+
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    <input type="text" name="testObjectItemList[0].productId" id="testObjectItemList[0].productId" class="col-xs-12 col-sm-6" value="" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="testObjectItemList[0].productSku">测试项1SKU</label>
+
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    <input type="text" name="testObjectItemList[0].productSku" id="testObjectItemList[0].productSku" class="col-xs-12 col-sm-6" value="" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    } else {
+
+                        @for(index <- 0 until form.value.get.getTestObjectItemList.size()) {
+                            @defining(form.value.get.getTestObjectItemList.get(index)) { oi =>
+
+                                @if(oi.getId != null) {
+                                    <input type="hidden" id="testObjectItemList[@index].id" name="testObjectItemList[@index].id" value="@oi.getId" />
+                                }
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="testObjectItemList[@index].productId">订单项@(index + 1)产品ID</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+                                            <input type="text" name="testObjectItemList[@index].productId" id="testObjectItemList[@index].productId" class="col-xs-12 col-sm-6" value="@oi.getProductId" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="testObjectItemList[@index].productSku">订单项@(index + 1)SKU</label>
+
+                                    <div class="col-xs-12 col-sm-9">
+                                        <div class="clearfix">
+                                            <input type="text" name="testObjectItemList[@index].productSku" id="testObjectItemList[@index].productSku" class="col-xs-12 col-sm-6" value="@oi.getProductSku" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                    <!--
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="newPassword">密码</label>
+
+                        <div class="col-xs-12 col-sm-9">
+                            <div class="clearfix">
+                                <input type="text" name="newPassword" id="newPassword" class="col-xs-12 col-sm-6" value="" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-12 col-sm-3 no-padding-right">性别</label>
+
+                        <div class="col-xs-12 col-sm-9">
+                            <div class="radio">
+                                <label>
+                                    <input name="gender" type="radio" class="ace" value="男">
+                                    <span class="lbl">男</span>
+                                </label>
+                                <label>
+                                    <input name="gender" type="radio" class="ace" value="女">
+                                    <span class="lbl">女</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="discount">享受折扣</label>
+
+                        <div class="col-xs-12 col-sm-9">
+                            <div class="clearfix">
+                                <input type="text" name="discount" id="discount" class="col-xs-12 col-sm-6" value="@form.value.fold("")(_.getStatus.toString)"/>%(填入0到100的数字)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="username">备注</label>
+
+                        <div class="col-xs-12 col-sm-9">
+                            <div class="clearfix">
+                                <textarea class="form-control" id="remark" name="remark" placeholder="备注"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+
+                    <div class="space-4"></div>
+
+                    <div class="clearfix form-actions">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button class="btn btn-info" type="button" id="submit_btn">
+                                <i class="icon-ok bigger-110"></i>
+                                提交
+                            </button>
+
+                                &nbsp; &nbsp; &nbsp;
+                            <button class="btn" type="reset">
+                                <i class="icon-undo bigger-110"></i>
+                                重置
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="hr hr-24"></div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+}

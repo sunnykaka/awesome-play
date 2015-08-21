@@ -1,0 +1,38 @@
+@(form: Form[_])
+
+@if(form.hasErrors) {
+
+    <div class="alert alert-block alert-danger">
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="icon-remove"></i>
+        </button>
+
+        <i class="icon-error red"></i>
+
+        @if(form.errors.size > 0) {
+            @for((key, value) <- form.errors) {
+                @key.toString :
+                @for(err <- value) {
+                    @Messages(err.message().toString())
+                }
+            }
+        } else {No error returned.}
+
+        @*for(e <- form.errors) {
+        @Messages(e.message, e.args: _*)<br/>
+        }*@
+
+        @*if(form.hasErrors) {
+        @if(form.errors.size() > 0) {
+        @for((key, value) <- form.errors) {
+        @for(err <- value) {
+        @if(err.contains("YourSelectFieldName")) {
+        @err.message().toString()
+        }
+        }
+        }
+        }
+        }*@
+    </div>
+
+}

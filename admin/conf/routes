@@ -1,0 +1,23 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET         /                                 @controllers.Application.index
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                     controllers.Assets.at(path="/public", file)
+
+
+#testObject
+GET         /test/objects                     @controllers.test.TestObjectController.list(status ?= null, orderNo ?= null)
+GET         /test/objects/add                 @controllers.test.TestObjectController.addPage()
+POST        /test/objects/save                @controllers.test.TestObjectController.saveTestObject()
+GET         /test/objects/:id/update          @controllers.test.TestObjectController.updatePage(id: Int)
+POST        /test/objects/save_by_json        @controllers.test.TestObjectController.createByJson()
+GET         /test/objects/:id/json            @controllers.test.TestObjectController.viewByJson(id: Integer)
+
+#testCache
+GET         /cache/:key                       @controllers.test.CacheController.getCache(key)
+PUT         /cache/:key                       @controllers.test.CacheController.setCache(key, value)

@@ -1,0 +1,77 @@
+@(testObjects: List[ordercenter.models.TestObject])
+
+@import common.utils.DateUtils._
+
+@main()() {
+
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+        try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>测试对象管理
+            </li>
+            <li class="active"><a href="@controllers.test.routes.TestObjectController.list()">测试对象查询</a></li>
+        </ul><!-- .breadcrumb -->
+    </div>
+
+    <div class="page-content">
+        <div class="page-header">
+            <h1>
+                测试对象管理
+                <small>
+                    <i class="icon-double-angle-right"></i>测试对象查询
+                </small>
+            </h1>
+        </div>
+            <!-- /.page-header -->
+
+        <div class="row">
+            <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>状态</th>
+                                        <th>买家</th>
+                                        <th class="hidden-480">金额</th>
+                                        <th>下单时间</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                @for(testObject <- testObjects) {
+                                    <tr>
+                                        <td>@testObject.getStatus.value</td>
+                                        <td>@testObject.getBuyerId</td>
+                                        <td>@testObject.getActualFee</td>
+                                        <td>@printDateTime(testObject.getCreateTime) </td>
+                                        <td>
+                                            <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+                                                <button class="btn btn-xs btn-info" onclick="location.href='@controllers.test.routes.TestObjectController.updatePage(testObject.getId)'">
+                                                    <i class="icon-edit bigger-120"></i>
+                                                </button>
+                                                <button class="btn btn-xs btn-success" onclick="location.href='@controllers.test.routes.TestObjectController.list()'">
+                                                    <i class="icon-info bigger-120"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+
+                                </tbody>
+                            </table>
+                        </div><!-- /.table-responsive -->
+                    </div><!-- /span -->
+                </div>
+            </div>
+        </div>
+    </div>
+}

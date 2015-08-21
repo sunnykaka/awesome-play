@@ -1,0 +1,127 @@
+@(title: String = "尚客平台管理系统")(staticFile: Html = Html(""))(content: Html)
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+    <head>
+        <meta charset="utf-8" />
+        <title>@title</title>
+
+        <meta name="description" content="overview &amp; stats" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link href="@routes.Assets.at("css/bootstrap.min.css")" rel="stylesheet" />
+        <link rel="stylesheet" href="@routes.Assets.at("css/font-awesome.min.css")" />
+
+        <!--[if IE 7]>
+        <link rel="stylesheet" href=@routes.Assets.at("/css/font-awesome-ie7.min.css")" />
+        <![endif]-->
+
+        <!-- fonts -->
+
+        <link rel="stylesheet" href="@routes.Assets.at("css/ace-fonts.css")" />
+
+        <!-- ace styles -->
+
+        <link rel="stylesheet" href="@routes.Assets.at("css/ace.min.css")" />
+        <link rel="stylesheet" href="@routes.Assets.at("css/ace-rtl.min.css")" />
+        <link rel="stylesheet" href="@routes.Assets.at("css/ace-skins.min.css")" />
+        <link rel="stylesheet" href="@routes.Assets.at("css/jquery-ui-1.10.3.full.min.css")" />
+        <link rel="stylesheet" href="@routes.Assets.at("css/jquery-ui-1.10.3.custom.min.css")" />
+
+        <!--[if lte IE 8]>
+        <link rel="stylesheet" href="@routes.Assets.at("css/ace-ie.min.css")" />
+        <![endif]-->
+
+        <!-- inline styles related to this page -->
+
+        <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap-datetimepicker.min.css")" />
+
+        <!-- ace settings handler -->
+
+        <script src="@routes.Assets.at("js/ace-extra.min.js")"></script>
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+        <!--[if lt IE 9]>
+        <script src="@routes.Assets.at("js/html5shiv.js")"></script>
+        <script src="@routes.Assets.at("js/respond.min.js")"></script>
+        <![endif]-->
+
+        <!--[if !IE]> -->
+        <script type="text/javascript">
+        window.jQuery || document.write("<script src='@routes.Assets.at("js/jquery-2.0.3.min.js")'>"+"<"+"/script>");
+        </script>
+            <!-- <![endif]-->
+
+            <!--[if IE]>
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='@routes.Assets.at("assets/js/jquery-1.10.2.min.js")'>"+"<"+"/script>");
+        </script>
+        <![endif]-->
+
+    </head>
+
+    <body>
+        <div class="navbar navbar-default" id="navbar">
+            <script type="text/javascript">try{ace.settings.check('navbar' , 'fixed')}catch(e){}</script>
+
+            <div class="navbar-container" id="navbar-container">
+                @header()
+            </div><!-- /.container -->
+        </div>
+
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">try{ace.settings.check('main-container' , 'fixed')}catch(e){}</script>
+
+            <div class="main-container-inner">
+                <a class="menu-toggler" id="menu-toggler" href="#">
+                    <span class="menu-text"></span>
+                </a>
+
+                <div class="sidebar" id="sidebar">
+                    @sidebar()
+                </div>
+
+                <div class="main-content">
+                    @content
+                </div><!-- /.main-content -->
+
+            </div><!-- /.main-container-inner -->
+
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="icon-double-angle-up icon-only bigger-110"></i>
+            </a>
+        </div><!-- /.main-container -->
+
+        <!-- basic scripts -->
+
+        <script type="text/javascript">
+        if("ontouchend" in document) document.write("<script src='@routes.Assets.at("js/jquery.mobile.custom.min.js")'>"+"<"+"/script>");
+        </script>
+        <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
+        <script src="@routes.Assets.at("js/typeahead-bs2.min.js")"></script>
+
+            <!-- page specific plugin scripts -->
+            <!--[if lte IE 8]>
+            <script src="@routes.Assets.at("js/excanvas.min.js")"></script>
+        <![endif]-->
+
+        <script src="@routes.Assets.at("js/jquery-ui-1.10.3.full.min.js")"></script>
+        <script src="@routes.Assets.at("js/jquery-ui-1.10.3.custom.min.js")"></script>
+        <script src="@routes.Assets.at("js/jquery.ui.touch-punch.min.js")"></script>
+        <script src="@routes.Assets.at("js/jquery.slimscroll.min.js")"></script>
+        <script src="@routes.Assets.at("js/date-time/moment.min.js")"></script>
+        <script src="@routes.Assets.at("js/date-time/bootstrap-datetimepicker.min.js")"></script>
+        <script src="@routes.Assets.at("js/jquery.validate.min.js")"></script>
+        <script src="@routes.Assets.at("js/bootbox.min.js")"></script>
+
+        <!-- ace scripts -->
+
+        <script src="@routes.Assets.at("js/ace-elements.min.js")"></script>
+        <script src="@routes.Assets.at("js/ace.min.js")"></script>
+
+            <!-- inline scripts related to this page -->
+        @staticFile
+
+    </body>
+</html>
