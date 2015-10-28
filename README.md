@@ -66,4 +66,4 @@ Open http://localhost:9000/ in your browser, you can see this page:
 Enjoy!
 
 
-Ps. I have some (Chinese blogs)[http://skaka.me/blog/2015/07/27/play1] to introduce Play :)
+Ps. I have some [Chinese blogs](http://skaka.me/blog/2015/07/27/play1) to introduce Play :)
