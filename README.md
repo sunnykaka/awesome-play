@@ -64,3 +64,6 @@ Open http://localhost:9000/ in your browser, you can see this page:
 ![](images/awesome-play3.png?raw=true)
 
 Enjoy!
+
+
+Ps. I have some (Chinese blogs)[http://skaka.me/blog/2015/07/27/play1] to introduce Play :)
