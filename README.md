@@ -60,7 +60,7 @@ run
 If everything goes well, you could see this:
 ![](images/awesome-play2.png?raw=true)
 
-Open [http://localhost:9000/] in your browser, you can see this page:
+Open http://localhost:9000/ in your browser, you can see this page:
 ![](images/awesome-play3.png?raw=true)
 
 Enjoy!
