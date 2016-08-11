@@ -3,7 +3,7 @@ import Keys._
 
 object Commons {
   val appVersion = "1.0.0-SNAPSHOT"
-  val commonScalaVersion = "2.11.6"
+  val commonScalaVersion = "2.11.8"
 
   val settings: Seq[Def.Setting[_]] = Seq(
     version := appVersion,

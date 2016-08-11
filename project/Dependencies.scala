@@ -5,7 +5,7 @@ import Keys._
 object Dependencies {
 
   val mysqlConnectorVersion = "5.1.32"
-  val springVersion = "4.1.6.RELEASE"
+  val springVersion = "4.2.6.RELEASE"
 
   val kamonVersion = "0.4.0"
 
