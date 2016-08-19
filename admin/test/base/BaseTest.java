@@ -101,21 +101,21 @@ public abstract class BaseTest {
         T call(GeneralDao generalDao);
     }
 
-    public Result routeWithExceptionHandle(Http.RequestBuilder requestBuilder) {
-
-        Result result;
-        Http.RequestImpl req = requestBuilder.build();
-
-        try {
-            result = Helpers.route(requestBuilder);
-        } catch (Exception e) {
-            Global global = new Global();
-            return global.onError(req, e).get(3000000L);
-        }
-
-        String s = Helpers.contentAsString(result);
-        Logger.debug(String.format("request: %s, response: %s", req.toString(), s));
-        return result;
-    }
+//    public Result routeWithExceptionHandle(Http.RequestBuilder requestBuilder) {
+//
+//        Result result;
+//        Http.RequestImpl req = requestBuilder.build();
+//
+//        try {
+//            result = Helpers.route(requestBuilder);
+//        } catch (Exception e) {
+//            Global global = new Global();
+//            return global.onError(req, e).get(3000000L);
+//        }
+//
+//        String s = Helpers.contentAsString(result);
+//        Logger.debug(String.format("request: %s, response: %s", req.toString(), s));
+//        return result;
+//    }
 
 }

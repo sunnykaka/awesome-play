@@ -5,7 +5,7 @@ package common.utils.play.interceptor;
  */
 public interface ActionFilter {
 
-    void doFilter(ActionFilterChain filterChain) throws Throwable ;
+    void doFilter(ActionFilterChain filterChain) ;
 
 
 }

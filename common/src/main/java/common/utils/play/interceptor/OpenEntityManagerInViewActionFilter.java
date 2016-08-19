@@ -1,5 +1,6 @@
 package common.utils.play.interceptor;
 
+import common.utils.play.BaseGlobal;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.orm.jpa.EntityManagerFactoryUtils;
 import org.springframework.orm.jpa.EntityManagerHolder;
@@ -15,14 +16,10 @@ import javax.persistence.PersistenceException;
  */
 public class OpenEntityManagerInViewActionFilter implements ActionFilter {
 
-    final EntityManagerFactory emf;
-
-    public OpenEntityManagerInViewActionFilter(EntityManagerFactory emf) {
-        this.emf = emf;
-    }
 
     @Override
-    public void doFilter(ActionFilterChain filterChain) throws Throwable {
+    public void doFilter(ActionFilterChain filterChain){
+        final EntityManagerFactory emf = BaseGlobal.ctx.getBean(EntityManagerFactory.class);
         boolean participate = false;
         if (TransactionSynchronizationManager.hasResource(emf)) {
             participate = true;

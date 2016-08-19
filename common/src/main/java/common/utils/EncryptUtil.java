@@ -1,10 +1,8 @@
 package common.utils;
 
 import common.exceptions.AppException;
-import common.utils.AES;
+import common.utils.play.BaseGlobal;
 import org.apache.commons.lang3.StringUtils;
-import play.Logger;
-import play.Play;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
@@ -19,7 +17,7 @@ public class EncryptUtil {
             throw new AppException("待加密内容不能为空");
         }
 
-        String secret = Play.application().configuration().getString("shop.secret");
+        String secret = BaseGlobal.application.configuration().getString("shop.secret");
         byte[] password = Base64.getDecoder().decode(secret);
         try {
             byte[] crypto = AES.encrypt(content.getBytes("UTF-8"), password);
@@ -36,7 +34,7 @@ public class EncryptUtil {
             throw new AppException("待解密内容不能为空");
         }
 
-        String secret = Play.application().configuration().getString("shop.secret");
+        String secret = BaseGlobal.application.configuration().getString("shop.secret");
         byte[] password = Base64.getDecoder().decode(secret);
         try {
             byte[] crypto = Base64.getDecoder().decode(cryptoInBase64);

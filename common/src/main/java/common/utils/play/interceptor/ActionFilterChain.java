@@ -1,13 +1,10 @@
 package common.utils.play.interceptor;
 
-import play.libs.F;
 import play.mvc.Action;
 import play.mvc.Http;
 import play.mvc.Result;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.concurrent.CompletionStage;
 
 /**
  * Created by liubin on 15/4/12.
@@ -18,7 +15,7 @@ public class ActionFilterChain {
 
     public int filterIndex = 0;
 
-    public F.Promise<Result> result;
+    public CompletionStage<Result> result;
 
     public Http.Context ctx;
 
@@ -34,7 +31,7 @@ public class ActionFilterChain {
         this.delegate = delegate;
     }
 
-    public void doFilter() throws Throwable {
+    public void doFilter() {
         if(filters.length <= filterIndex) {
             result = delegate.call(ctx);
         } else {

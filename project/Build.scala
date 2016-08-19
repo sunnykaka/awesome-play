@@ -41,8 +41,9 @@ object ApplicationBuild extends Build {
     dependsOn(order)
   }
 
-
   lazy val root = (project in file(".")).
     settings(Commons.settings: _*).
     aggregate(admin)
+
+
 }

@@ -1,14 +1,14 @@
 package configs;
 
-import common.utils.play.BaseGlobal;
+import common.utils.play.GuiceModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import play.Logger;
 import play.db.Database;
 
 import javax.persistence.EntityManagerFactory;
@@ -20,7 +20,6 @@ import java.util.HashMap;
 public class DataConfig {
 
     @Bean
-    @Lazy
     public EntityManagerFactory entityManagerFactory() {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setShowSql(false);
@@ -45,7 +44,6 @@ public class DataConfig {
     }
 
     @Bean
-    @Lazy
     public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager(entityManagerFactory());
 
@@ -53,9 +51,8 @@ public class DataConfig {
     }
 
     @Bean
-    @Lazy
     public DataSource dataSource(){
-        return BaseGlobal.injector.instanceOf(Database.class).getDataSource();
+        return GuiceModule.injector.instanceOf(Database.class).getDataSource();
     }
 
 

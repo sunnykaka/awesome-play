@@ -7,13 +7,13 @@ import com.google.common.base.Joiner;
 import common.utils.IdUtils;
 import common.utils.JsonUtils;
 import common.utils.page.PageFactory;
-import common.utils.play.PlayForm;
+import common.utils.play.BaseGlobal;
 import ordercenter.constants.TestObjectStatus;
 import ordercenter.models.TestObject;
 import ordercenter.models.TestObjectItem;
 import ordercenter.services.TestObjectService;
-import org.springframework.beans.factory.annotation.Autowired;
 import play.data.Form;
+import play.data.FormFactory;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -21,6 +21,7 @@ import views.html.test.add;
 import views.html.test.list;
 import views.html.test.update;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -31,30 +32,34 @@ import static java.util.Optional.*;
 @org.springframework.stereotype.Controller
 public class TestObjectController extends Controller {
 
-    @Autowired
-    private TestObjectService testObjectService;
+    private FormFactory formFactory;
 
+    @Inject
+    public TestObjectController(FormFactory formFactory) {
+        this.formFactory = formFactory;
+    }
 
     public Result list(String status, String orderNo) {
 
-        List<TestObject> testObjectList = testObjectService.findByKey(of(PageFactory.getPage(request())), ofNullable(orderNo),
+        List<TestObject> testObjectList = testObjectService().findByKey(of(PageFactory.getPage(request())), ofNullable(orderNo),
                 ofNullable(status).map(TestObjectStatus::valueOf), empty(), empty());
 
         return ok(list.render(testObjectList));
     }
 
+
     public Result addPage() {
-        return ok(add.render(Form.form(TestObject.class)));
+        return ok(add.render(formFactory.form(TestObject.class)));
     }
 
     public Result updatePage(Integer id) {
-        return ok(update.render(Form.form(TestObject.class).fill(testObjectService.get(id))));
+        return ok(update.render(formFactory.form(TestObject.class).fill(testObjectService().get(id))));
     }
 
     public Result saveTestObject() {
 
-        Form<TestObject> form = PlayForm.form(TestObject.class).bindFromRequest();
-        TestObject testObject = form.get();
+        Form<TestObject> form = formFactory.form(TestObject.class).bindFromRequest();
+
         if(form.hasErrors()) {
             if(form.globalError() != null) {
                 System.out.println("global error: " + form.globalError().message());
@@ -64,12 +69,11 @@ public class TestObjectController extends Controller {
                     String.format("error key: %s, error value: %s", k,
                             Joiner.on("").join(v.stream().map(x -> x.toString()).collect(Collectors.toList())))));
 
-            System.out.println(testObject == null);
-            System.out.println(testObject.getBuyerId());
 
             return ok(add.render(form));
         } else {
 
+            TestObject testObject = form.get();
             System.out.println(testObject.getBuyerId());
             System.out.println(testObject.getBuyTime());
             System.out.println(testObject.getStatus());
@@ -84,12 +88,12 @@ public class TestObjectController extends Controller {
 
             if(IdUtils.isEmpty(testObject.getId())) {
 
-                testObjectService.saveTestObject(testObject);
+                testObjectService().saveTestObject(testObject);
 
             } else {
 
                 //拷贝修改的数据
-                TestObject testObjectInDb = testObjectService.get(testObject.getId());
+                TestObject testObjectInDb = testObjectService().get(testObject.getId());
                 testObjectInDb.setActualFee(testObject.getActualFee());
                 testObjectInDb.setBuyerId(testObject.getBuyerId());
                 testObjectInDb.setBuyTime(testObject.getBuyTime());
@@ -104,8 +108,9 @@ public class TestObjectController extends Controller {
                     }
                 }
 
-                testObjectService.saveTestObject(testObjectInDb);
+                testObjectService().saveTestObject(testObjectInDb);
             }
+
 
 
             return redirect(routes.TestObjectController.list(null, null));
@@ -136,10 +141,15 @@ public class TestObjectController extends Controller {
 
     public Result viewByJson(Integer testObjectId) throws JsonProcessingException {
 
-        TestObject testObject = testObjectService.get(testObjectId);
+        TestObject testObject = testObjectService().get(testObjectId);
 
         return ok(JsonUtils.object2Node(testObject));
 
     }
+
+    public TestObjectService testObjectService() {
+        return BaseGlobal.ctx.getBean(TestObjectService.class);
+    }
+
 
 }

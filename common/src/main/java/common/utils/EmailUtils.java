@@ -1,7 +1,6 @@
 package common.utils;
 
 import common.utils.play.BaseGlobal;
-import play.Play;
 import play.libs.mailer.Email;
 import play.libs.mailer.MailerClient;
 
@@ -18,7 +17,7 @@ public class EmailUtils {
             MailerClient mailerClient = BaseGlobal.injector.instanceOf(MailerClient.class);
 
             Email email = new Email();
-            email.setFrom(Play.application().configuration().getString("play.mailer.from", "尚客<service@yezaoshu.com>"));
+            email.setFrom(BaseGlobal.application.configuration().getString("play.mailer.from", "尚客<service@yezaoshu.com>"));
             email.addTo(mailTo);
             email.setSubject(title);
             email.setBodyHtml(template);

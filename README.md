@@ -1,18 +1,19 @@
 ## awesome-play
 
 ### Introduction
+** Upgrade play version to 2.5.5 **
 This project is an use case for [Play Framework 2](https://github.com/playframework/playframework) in real world,
 Play Framework is effective, mature and easy to use. But it was written by Scala, and looks difficult to those who only knew Java.
 If you are from Java world and want adopt Play Framework in your project, you can use this project as scaffold.
 
 ### Architecture
-Play 2.4.2 + Spring 4.1.6 + Hibernate 4.3.6
+Play 2.5.5 + Spring 4.2.6 + Hibernate 4.3.6
 ![](images/awesome-play.png?raw=true)
 
 ### Prerequisites
 1.JDK8+  
-2.[Scala 2.11.6+](http://www.scala-lang.org/)  
-3.[sbt 0.13.7+](http://www.scala-sbt.org/)  
+2.[Scala 2.11.8+](http://www.scala-lang.org/)
+3.[sbt 0.13.12+](http://www.scala-sbt.org/)
 4.[MySQL 5.5+](http://www.mysql.com/) or [MariaDB 10+](https://mariadb.org/)  
 5.[Redis 2.7+](http://redis.io/)
 
