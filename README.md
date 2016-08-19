@@ -1,7 +1,8 @@
 ## awesome-play
 
 ### Introduction
-** Upgrade play version to 2.5.5 **
+**Upgrade play version to 2.5.5**  
+
 This project is an use case for [Play Framework 2](https://github.com/playframework/playframework) in real world,
 Play Framework is effective, mature and easy to use. But it was written by Scala, and looks difficult to those who only knew Java.
 If you are from Java world and want adopt Play Framework in your project, you can use this project as scaffold.
